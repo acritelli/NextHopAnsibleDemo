@@ -39,11 +39,11 @@ def deploy_demo(destEmail, studentName, studentNumber):
 
     #TODO: add these to sqlite DB
     #Core information
-    coreVPCID = "vpc-8ef89ce8"
-    corePublicRouteTableID = "rtb-2b7ddd52"
-    coreIP = "52.72.35.206"
+    coreVPCID = 
+    corePublicRouteTableID = CHANGEME
+    coreIP = CHANGEME
     coreSubnet = "10.0.0.0/16"
-    amiImageID = "ami-4ed71458"
+    amiImageID = CHANGEME
     sourceEmail = "demo@acritelli.com"
 
 
