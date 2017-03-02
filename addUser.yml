@@ -1,0 +1,5 @@
+- hosts: localhost
+  become: true
+  tasks:
+    - name: add user
+      user: name={{ username }} password={{ password | password_hash('sha512') }} state=present
