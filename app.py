@@ -39,7 +39,7 @@ def deploy_demo(destEmail, studentName, studentNumber):
 
     #TODO: add these to sqlite DB
     #Core information
-    coreVPCID = 
+    coreVPCID =
     corePublicRouteTableID = CHANGEME
     coreIP = CHANGEME
     coreSubnet = "10.0.0.0/16"
@@ -281,7 +281,7 @@ def deploy_demo(destEmail, studentName, studentNumber):
         emailBody += "Webserver Public IP: " + publicInstancePublicIP + "\n"
         emailBody += "Webserver Private IP: " + publicInstancePrivateIP + "\n"
         emailBody += "Database Server Private IP: " + privateInstancePrivateIP + "\n\n"
-        emailBody += "You can use your credentials to log into the core server at " + coreIP + "\n"
+        emailBody += "You can use your credentials to log into the core server at " + coreIP + "\n\n"
 	emailBody += "Download the demo guide at https://acritelli.com/presentations/nexthopAnsible2017/ansible_demo_guide.docx"
 
         emailClient = boto3.client('ses',
