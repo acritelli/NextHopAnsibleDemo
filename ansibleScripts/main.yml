@@ -1,0 +1,77 @@
+- hosts: all
+  remote_user: ansible
+  become: true
+  tasks:
+
+#  - name: update all software
+#    yum: name=* state=latest
+
+  - name: install basic packages
+    yum: name={{ item }} state=present
+    with_items:
+      - vim
+      - wget
+      - unzip
+
+- hosts: webservers
+  remote_user: ansible
+  become: true
+  tasks:
+
+  - name: install web packages
+    yum: name={{ item }} state=present
+    with_items:
+      - httpd
+      - php
+      - php-mysql
+    notify: restart apache
+
+  - name: ensure apache is started
+    service: name=httpd state=started
+
+  - name: download wordpress
+    get_url: url=https://wordpress.org/latest.zip dest=/tmp/wordpress.zip
+
+  - name: unzip wordpress
+    unarchive:
+      src: /tmp/wordpress.zip
+      remote_src: yes
+      dest: /var/www/html
+
+  - name: set permissions for apache:apache html directory - apache group needs write on this dir
+    file: path=/var/www/html owner=apache group=apache mode=0775 recurse=yes
+
+  handlers:
+  - name: restart apache
+    service: name=httpd state=restarted
+
+
+- hosts: dbservers
+  remote_user: ansible
+  become: true
+  vars:
+    web_server: 10.100.1.225
+    db_user: test123
+    db_password: test123
+  tasks:
+
+  - name: install database packages
+    yum: name={{ item }} state=present
+    with_items:
+      - mariadb-server
+      - mysql
+      - MySQL-python
+
+  - name: start mariadb
+    service: name=mariadb state=started
+
+  - name: create wordpress database
+    mysql_db: name=wordpress state=present
+
+  - name: add wordpress user with permissions on wordpress db and host set to remote web host
+    mysql_user:
+      name: "{{ db_user }}"
+      password: "{{ db_password }}"
+      host: "{{ web_server }}"
+      priv: 'wordpress.*:ALL'
+      state: present
