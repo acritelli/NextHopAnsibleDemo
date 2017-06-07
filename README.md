@@ -1,6 +1,6 @@
-Code from my live Ansible demo at RIT NextHop. README is a work in progress and will be updated soon.
+Code from my live Ansible demo at RIT NextHop.
 
-# Overivew
+# Overview
 
 This code builds the demo environment from my Ansible presentation at RIT's NextHop. It's a Flask application with an extremely poor web interface that allows a demo participant to put in their username and password and have a demo environment provisioned for them. It got the job done for this presentation.
 
